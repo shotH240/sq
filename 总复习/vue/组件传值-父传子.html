@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传值-父传子</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child1 :name="name" :age="age"></child1>
+    </div>
+    <template id="child1">
+        <div>
+            <span>我叫{{name}},今年{{age}}岁</span>
+        </div>
+        </template>
+    <script>
+
+        /**
+         * 子组件通过props数组来接收父组件传递过来的值,
+         * 在el实例注册的子组件赋予属性(属性名与props的一致,value则为想获取的属性)
+         * @type {{template: string, props: string[]}}
+         */
+
+        const child1 = {
+            template:'#child1',
+            props:['name','age']
+        }
+
+        const vue = new Vue({
+            el:'#app',
+            data:{
+                name:'张三',
+                age:20
+            },
+            components:{child1}
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片懒加载</title>
+    <style>
+        img{
+            display: block;
+            height: 500px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            let leg = document.getElementsByTagName('img').length; //获取所有图片
+            let img = document.getElementsByTagName('img'); //获取图片数组
+            let num = 0; //存储图片加载到的位置,避免每次都从第一张图片开始加载
+
+            // console.log(leg)
+            // console.log(img)
+            lozyload(); //页面载入时先加载可视区域内的图片
+
+            window.onscroll = lozyload; //浏览器滚动时根据滚动距离来加载下一张图片
+
+            function lozyload(){
+                let visibleHeight = document.documentElement.clientHeight; //可见区域高度
+                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离
+                // let scrollH = document.documentElement.scrollHeight; //可滚动的最大距离
+                //offsetTop   图片距离父级元素之间的高度距离
+                // console.log('容器可滚动距离',scrollH)
+                // console.log('可视高度',visibleHeight)
+                // console.log('滚动条距离',scrollTop)
+                for(let i = num; i < leg; i++){
+                    if((parseInt(img[i].offsetTop + 20)) < visibleHeight + scrollTop){
+                        if(img[i].getAttribute('src') == ''){
+                            img[i].src = img[i].getAttribute('data-src');
+                        }
+                        num = i + 1;
+                    }
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <img src="./../img/yyzj.jpg" data-src="./../img/yyzj.jpg">
+    <img src="" data-src="./../img/yydq.jpg">
+    <img src="" data-src="./../img/yyxq.png">
+    <img src="" data-src="./../img/zy.jpg">
+    <img src="" data-src="./../img/mdgj.jpg">
+    <img src="" data-src="./../img/mdjx.jpg">
+    <img src="" data-src="./../img/mdls.jpg">
+    <img src="" data-src="./../img/mdsm.jpg">
+    <img src="" data-src="./../img/mdxy.jpg">
+    <img src="" data-src="./../img/mdzg.jpg">
+    <img src="" data-src="./../img/mdzy.jpg">
+    <img src="" data-src="./../img/wj.jpg">
+</body>
+</html>

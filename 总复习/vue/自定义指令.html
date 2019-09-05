@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指定</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <span v-search="{msg:msg,data:text}">{{text}}</span>
+    </div>
+
+    <script>
+        Vue.directive('search',{
+            componentUpdated(el,data){
+                //第一个参数为当前的元素节点,第二个参数为在v指令所绑定的值
+                // console.log(el,data)
+                let text = data.value.data; //span文本
+                let msg = data.value.msg;   //用户输入
+                // console.log(text,msg)
+                let index = text.indexOf(msg)
+                let result = text;
+                if(msg.length > 0 && index!=-1){
+                    let con = text.split(msg); //已用户输入的文本来切割span文本转换为数组
+                    console.log(con)
+
+                    //创建一顿span文本,并将用户输入的值放入文本并设置样式
+                    let html = `
+                        <span style="color: deepskyblue;">${msg}</span>
+                    `
+                    result = con.join(html) //以用户输入的值作为分隔符,创建一个新的字符串
+                }
+                el.innerHTML = result;
+            }
+        })
+
+        const v = new Vue({
+            el:'#app',
+            data:{
+               text:'Hello World' ,
+                msg:''
+            },
+        })
+    </script>
+</body>
+</html>

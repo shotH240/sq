@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象的属性描述</title>
+
+</head>
+<body>
+    <script>
+        /**
+         *
+         * @type {{name: string}}
+         *
+         *对象里存在的属性描述分两种：
+         *      数据描述符：数据描述是一个具有值的属性,该值可以是可写或不可写,可枚举or不可枚举等等
+         *      存储描述符(访问器属性)： 存储描述是由getter和setter来描述的属性
+         *
+         *      描述符必须是这两种形式之一,不能同时是两种
+         *
+         *
+         * Object.defineProperty()方法：
+         *      该方法会在一个对象上直接定义一个新属性或者修改一个对象的现有属性,并返回这个对象
+         *
+         *      该方法有三个参数    Object.defineProperty(arg1,arg2,arg3)
+         *      arg1：要在其上定义属性的对象
+         *      arg2：要定义或修改的属性的名称
+         *      arg3：将被定义或修改的属性描述对象
+         *
+         * Object.getOwnPropertyDescriptors()方法：
+         *      该方法可以以获取指定对象的所有属性,包括属性的特性，参数为要获取的对象
+         *
+         *
+         *      数据描述的四个特性：
+         *          value：该属性的默认值(如果不设置默认是undefined)
+         *          configurable:   表示属性是否可以被delete,以及其他三个属性描述符是否可被更改,默认为false
+         *          writable:   表示属性是否可被修改,默认为false
+         *          enumerable: 表示属性是否可枚举,默认为false
+         *
+         *      存储描述的四个特性：
+         *          set：设置属性值的函数,当该属性的值被设置时,就会触发该函数,
+         *              并且该函数将以第一个参数作为值传递进来
+         *          get：读取该属性值的函数,当该值被获取时会触发该函数,
+         *              在该函数中通过return来返回从set自定义的值
+         *
+         *
+         */
+        let obj = {name:'Tom'}
+
+        /*
+            数据描述
+         */
+        // Object.defineProperty(obj,'age',{
+        //     value:20,
+        //     writable:true,
+        //     configurable:true,
+        //     enumerable:true,
+        // })
+        // obj.age = 30;
+        // let res = Object.getOwnPropertyDescriptors(obj)
+        // console.log('res',res)
+        // console.log('one：', obj.age)
+        //因为上述代码的configurable属性为false   所以在下列代码中更改他其他的三个特性时,会报错
+        // Object.defineProperty(obj,'age',{
+        //     writable:false
+        // })
+        // obj.age = 40;
+        //
+        // console.log('two：',obj.age)
+        //--------------------------------------------------------------
+
+
+        /*
+            存储描述
+         */
+
+        // var sex = '男'
+        Object.defineProperty(obj,'sex',{
+            get:function(){
+                console.log('get')
+                return sex
+            },
+            set:function(value){
+                console.log(' set：',value)
+                sex = value[0]
+            }
+        })
+        obj.sex = [0,1]
+
+        // let res = Object.getOwnPropertyDescriptors(obj)
+        // console.log('res',res)
+        console.log('属性：',obj.sex);
+        obj.sex = [3,7]
+
+    </script>
+</body>
+</html>

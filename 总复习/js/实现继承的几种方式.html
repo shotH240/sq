@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /**
+         *   JS实现继承的几种方式
+         */
+
+        /*
+            1.1原型继承
+         */
+
+       function Person(name,age){
+           this.name = name;
+           this.age = age;
+       }
+       Person.prototype.sayHello = function(){
+           console.log('我叫' + this.name + ',今年' + this.age + '岁')
+       }
+
+       let p1 = new Person('Tom',23);
+       p1.sayHello();
+
+       /*
+          1.2 原型继承
+        */
+       let obj = {
+           fun1:function(){console.log('我是fun1')},
+           fun2:function(){console.log('我是fun2')}
+       }
+
+       function Yx1(){}
+       function Yx2(){}
+       Yx1.prototype = obj;
+       Yx2.prototype = obj;
+       let y1 = new Yx1();
+       y1.fun1();
+       let y2 = new Yx2();
+       y1.fun2();
+
+
+
+    //   -----------------------------------------------------------------
+        /*
+            2.通过绑定this指向来实现继承
+         */
+        /*
+            2.1  bind实现
+         */
+        function Vehicle(vhName,vhType){
+            this.vhName = vhName;
+            this.vhType = vhType;
+            this.vhFun = function(){
+                console.log('车辆名称：' + this.vhName + ',车辆类型：' + this.vhType)
+            }
+        }
+        function Bindfun(){
+            Vehicle.bind(this)('奔驰','轿车')
+        }
+        let bf = new Bindfun();
+        bf.vhFun();
+
+        /*
+            2.2  call实现
+         */
+        function Callfun(){
+            Vehicle.call(this,'fj','飞机');
+        }
+        let cf = new Callfun();
+        cf.vhFun();
+
+        /*
+            2.3  apply实现
+         */
+        function Applyfun(){
+            Vehicle.apply(this,['泰坦尼克号','轮船'])
+        }
+        let af = new Applyfun();
+        af.vhFun();
+
+        /*
+            3.组合继承
+         */
+
+        
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插槽</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child>
+        <!--     在template中使用v-slot:one的方式来设置插槽内容       -->
+            <template v-slot:one>
+                <span>我是one</span>
+            </template>
+<!--        slotProps来接收设置插槽时所传递的参数    -->
+            <template v-slot:two="slotProps">
+                <span>我是two</span>
+                <span>我是参数一：{{slotProps.msg}}</span>
+                <span>我是参数二：{{slotProps.info}}</span>
+            </template>
+            <div>啦啦啦</div>
+            <div>卡卡卡</div>
+            <span>匿名插槽1</span>
+            <span>匿名插槽2</span>
+        </child>
+    </div>
+    <template id="child">
+        <div>
+            我是child
+    <!--      设置插槽,并提供插槽名称(具名插槽)      -->
+            <slot name="one"></slot>
+<!--            插槽传值,通过自定义属性的方式传递参数-->
+            <slot name="two" :msg='msg' :info="info"></slot>
+<!--            匿名插槽  定义了slot,在组件渲染的el实例中,则可以直接在里面编写html-->
+            <slot></slot>
+        </div>
+    </template>
+    <script>
+        const child = {
+            template:'#child',
+            data(){
+                return {
+                    msg:'Hello',
+                    info:'World'
+                }
+            },
+
+        }
+        const  vm = new Vue({
+            el:'#app',
+            data:{},
+            components:{child}
+        })
+    </script>
+</body>
+</html>

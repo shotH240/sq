@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue自定义组件的v-model</title>
+<!--    <script src="./js/vue.js"></script>-->
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <div>啦啦啦</div>
+        <child :msg="msg" @aaa="changeValue"></child>
+    </div>
+    <template id="child">
+        <div>
+            请输入：<input @input="$emit('aaa',$event.target.value)" type="text" />
+        </div>
+    </template>
+    <script>
+        /**
+         * 自定义属性接收父组件传递过来的值,   子组件通过自定义监听事件将文本框输入的值传给父组件
+         * 在父组件的监听方法中改变msg
+         * @type {{template: string, methods: {}, updated(*=): void, props: string[]}}
+         */
+        const child = {
+            template:'#child',
+            props:['msg'],
+            methods: {
+
+            },
+            updated(value){
+                console.log(value)
+                // console.log(this.msg)
+            }
+
+        };
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'Hello'
+            },
+            methods:{
+                changeValue(msg){
+                    console.log('msg',msg)
+                    this.msg = msg;
+                }
+            },
+            components:{child}
+        })
+    </script>
+</body>
+</html>

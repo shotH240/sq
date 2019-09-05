@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        xxx
+        <button v-on='{click:aaa,click:bbb}'>dianji</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            methods: {
+                aaa(){
+                    console.log('aaa')
+                },
+                bbb(){
+                    console.log('bbb')
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

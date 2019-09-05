@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侦听器、计算属性、方法的区别</title>
+    <script src="./js/vue.js"></script>
+    <script>
+        window.onload = function(){
+            /**
+             *  计算属性：   计算属性会把计算的结果保存在缓存中,只要依赖不发生变化,
+             *              多次访问计算属性会一直使用缓存中的数据，只有当依赖发送变化时,计算属性才会发生变化
+             *
+             *  方法：     每次调用方法时,都会重新执行一遍
+             *
+             *
+             *  侦听器：    只有当侦听的值发生变化时,侦听函数才会被触发,想通过监听一个值的变化来改变其他的值,
+             *              可以使用侦听器
+             *
+             *
+             *  面试题：    如何侦听一个对象的变化
+             *
+             *
+             *
+             *
+             *
+             */
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+            {{userInfo.name}}
+    </div>
+    <script>
+         var v = new Vue({
+             el:'#app',
+             data:{
+                 userInfo:{
+                     name:'张三'
+                 }
+             },
+             watch:{
+                 userInfo: {
+                     handle(val){
+                         console.log('发生变化了,' + val)
+                         return val
+                     },
+                     deep:true
+                 }
+             }
+         })
+    </script>
+</body>
+</html>

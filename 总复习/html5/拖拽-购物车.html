@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽-购物车</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        #productList{
+            display: flex;
+            height: 500px;
+            width: 100%;
+            border: 1px solid;
+        }
+        #productList>li{
+            width: 25%;
+            height: 100%;
+            border: 1px solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font: bold 15px/2 '微软雅黑';
+            color: cornflowerblue;
+        }
+        img{
+            width: 70%;
+            height: 80%;
+        }
+        #main{
+            border: 1px solid;
+        }
+
+        #shop{
+            min-height: 300px;
+            width: 100%%;
+            display: flex;
+            flex-direction: column;
+        }
+        #shop>li{
+            width: 100%;
+            height: 40px;
+            font: bold 17px/2 '微软雅黑';
+            color: darkgreen;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #zj{
+            color: red;
+            text-align: right;
+            font: bold 30px/2 '微软雅黑';
+        }
+        .add,.minus{
+            width: 40px;
+            height: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <ul id="productList">
+        <li class="product" draggable="true">
+            <img src="./img/img1.jpg" />
+            <p>javascript语言精粹</p>
+            <p>￥20</p>
+        </li>
+        <li class="product" draggable="true">
+            <img src="./img/img2.jpg" />
+            <p>javascript权威指南</p>
+            <p>￥50</p>
+        </li>
+        <li class="product" draggable="true">
+            <img src="./img/img3.jpg" />
+            <p>精通javascript</p>
+            <p>￥30</p>
+        </li>
+        <li class="product" draggable="true">
+            <img src="./img/img4.jpg" />
+            <p>javascript编程艺术</p>
+            <p>￥100</p>
+        </li>
+    </ul>
+    <div id="main">
+        <ul id="shop">
+            <li>
+                <div>商品名称</div>
+                <div>商品总价</div>
+                <div>商品数量</div>
+                <div>操作</div>
+            </li>
+        </ul>
+        <div id="zj">总计：<span id="count">0</span></div>
+    </div>
+    <script>
+        window.onload = function(){
+            //获取dom节点
+            let productList = document.getElementsByClassName('product');//商品列表
+            let shop = document.getElementById('shop'); //购物车
+            let count = document.getElementById('count');   //获取总计
+            let obj = {};   //  存放拖拽过来的书
+            let num = 1;    //保存商品数量
+            let sum = 0;    //保存总计
+            let length = productList.length-1;
+            //遍历所有的li开始拖拽
+            for(let i = 0; i <=length; i++){
+                let value = productList[i]; //得到每一个商品
+                // console.log(value)
+                value.ondragstart = function(event){
+                    let ev = event || window.event;
+                    // console.log(this)
+                    //拖拽时获取该li中的p元素
+                    let ap = this.getElementsByTagName('p')
+                    // console.log(ap[0].innerHTML)
+                    //对获取到的价格进行处理
+                    let price = parseInt(ap[1].innerHTML.substring(1));
+                    // console.log(typeof price)
+                    //将拖拽的内容传递过去
+                    ev.dataTransfer.setData('bookName',ap[0].innerHTML);
+                    ev.dataTransfer.setData('bookPrice',price);
+                }
+            }
+
+            shop.ondragover = function(event){  //阻止浏览器默认事件
+                var ev = event || window.event;
+                ev.preventDefault();
+            }
+
+            //拖拽到目标元素上释放鼠标
+            shop.ondrop = function(ev){
+                let bookName = ev.dataTransfer.getData('bookName');
+                let bookPrice = ev.dataTransfer.getData('bookPrice');
+                // console.log(bookName)
+                // console.log(bookPrice)
+
+                if(!obj[bookName]){ //如果购物车中不存在该书
+                    // console.log('不存在')
+                    //创建li节点
+                    let li = document.createElement('li');
+
+                    //商品名称
+                    let productName = document.createElement('div');
+                    productName.innerHTML = bookName;
+                    productName.setAttribute('class','productName')
+                    li.appendChild(productName)
+
+                    //商品总价
+                    let productCount = document.createElement('div');
+                    productCount.setAttribute('class','productCount')
+                    productCount.innerHTML = bookPrice;
+                    li.appendChild(productCount);
+
+                    //商品数量
+                    let productSum = document.createElement('span')
+                    productSum.innerHTML = num + '';
+                    productSum.setAttribute('class','productSum')
+                    li.appendChild(productSum)
+
+                    //操作 +
+                    let cz = document.createElement('div');
+                    let add = document.createElement('button')
+                    add.innerHTML = '加'
+                    // add.className = 'add'
+                    add.setAttribute('class','add')
+                    add.onclick = function(){
+                        console.log('xxx')
+                    }
+                    cz.appendChild(add)
+                    //操作 -
+                    let minus = document.createElement('button')
+                    minus.innerHTML = '减'
+                    // minus.className = 'minus'
+                    minus.setAttribute('class','minus')
+                    cz.appendChild(minus)
+
+                    li.appendChild(cz)
+
+
+                    shop.appendChild(li)    //购物车节点将li加入进去
+                    obj[bookName] = 1;  //将书保存到obj对象中
+                    // count.innerHTML = parseInt(count.innerHTML) + parseInt(bookPrice)
+                }else{  //如果购物车中已添加该书
+                    // console.log('已存在')
+                    //获取书名
+                     let productName =  document.getElementsByClassName('productName');
+                    //获取数量
+                    let productSum = document.getElementsByClassName('productSum');
+                    //总计
+                    //获取总价格
+                    let productCount = document.getElementsByClassName('productCount');
+                    let length = productName.length-1;
+
+                    for(let i = 0; i <= length; i++){
+                       // console.log(productName[i])
+                        if(productName[i].innerHTML === bookName){
+                            //处理总价格
+                            productCount[i].innerHTML = parseInt(productCount[i].innerHTML)+parseInt(bookPrice)
+                            //数量
+                            productSum[i].innerHTML = parseInt(productSum[i].innerHTML)+1;
+                            //总价格
+                            sum = parseInt(sum) + parseInt(productCount[i].innerHTML)
+                        }
+
+                    }
+                    //总价
+                    count.innerHTML = parseInt(count.innerHTML) + parseInt(sum)
+                }
+            }
+
+            let add = document.getElementsByClassName('add');
+            console.log(add)
+            // let addLength = add.length - 1;
+            // for(let i = 0 ; i <= addLength; i++){
+            //     console.log(add[i]);
+            // }
+        }
+    </script>
+</body>
+</html>

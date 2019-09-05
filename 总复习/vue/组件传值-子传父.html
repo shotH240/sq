@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传值-子传父</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child @send="main"></child>
+        <span>我的name：{{name}},我的age：{{age}}</span>
+    </div>
+    <template id="child">
+        <div>
+            <button @click="click">传值到父组件</button>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * 子组件创建自定义函数,在函数中设置$emit('自定义监听事件',value),通过事件绑定,
+         * 在父组件el实例注册的子组件绑定自定义监听事件,然后在父组件的methods中定义一个方法来接收
+         * 方法名为自定义监听事件的value    该方法的第一个参数为子组件传递过来的值
+         *
+         * @type {{template: string, data(): *, methods: {click(): void}}}
+         */
+        const child = {
+            template:'#child',
+            data(){
+                return {
+                    userInfo:{
+                        name:'张三',
+                        age:20
+                    },
+
+                }
+            },
+            methods:{
+              click(){
+                  console.log('子组件方法被触发了')
+                  this.$emit('send',this.userInfo)
+              }
+            },
+        }
+        const vue = new Vue({
+            el:'#app',
+            data:{
+                name:'',
+                age:''
+            },
+            methods:{
+                main(val){
+                    console.log(val)
+                    this.name = val.name;
+                    this.age = val.age;
+                }
+            },
+            components:{child}
+        })
+    </script>
+</body>
+</html>

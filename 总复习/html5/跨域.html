@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>跨域</title>
+    <script>
+        /**
+         *  跨域：
+         *      指的是浏览器不能执行其他网站的脚本,它是由浏览器的同源政策造成的,
+         *      是浏览器对js施加的安全限制
+         *
+         *      同源政策：是指当两个不同的页面通信时,只要协议、域名、端口有一个不一致,就会导致跨域
+         *                 　协议、域名、端口号都相同，只要有一个不相同，那么都是非同源。
+         *
+         *
+         *  解决方法：
+         *         1.response添加响应头(header)
+         *           resp.setHeader("Access-Control-Allow-Origin", "*");
+         *
+         *         2.jsonp方式
+         *              在请求时将datatype转换为'jsonp',
+         *              定义属性jsonp：''
+         *
+         *         3.HttpClient请求转发
+         *
+         *         4.nginx反向代理
+         *
+         *
+         */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function(){
+            /**
+             *      1.什么是vue生命周期(已理解)
+             *
+             *      2,vue生命周期的作用是什么
+             *      答：  每一个vue实例在创建时都会经过一系列的初始化过程,比如事件监听(当值发生改变时),
+             *              组件创建,组件挂载等等,在这个过程中会运行着vue的生命周期钩子函数,在这些函数中,
+             *              我们可以做相应的操作
+             *
+             *      3.第一次页面加载会触发哪几个钩子
+             *      答：beforeCreate,created,beforeMounted,mounted
+             *
+             *      4..created和mounted的区别
+             *      答：
+             *              created：在模板渲染成html之前,通常会在created中做数据的初始化
+             *              mounted：在模板渲染成html之后
+             *              这将意味着如果在created中想操纵dom元素,但是由于html并未渲染完成,所以无法获取到dom元素,
+             *              而在mounted中,html已经完全渲染,此时可以获取dom元素
+             *
+             *      5.vue获取数据在哪个周期函数
+             *      答：     created和mounted都可以,通常情况下是使用created,在该函数中实现数据的初始化,
+             *              但是如果想在获取数据的同时操纵dom元素,则需用使用mounted
+             */
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

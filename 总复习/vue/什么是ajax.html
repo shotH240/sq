@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /**
+         * Ajax是一种技术方案，但并不是一种新技术。
+         * 它依赖现有的CSS/HTML/JavaScript，而其中最核心的依赖是浏览器提供的XMLHttpRequest对象，
+         * 是这个对象使得浏览器可以发出HTTP请求与接收HTTP响应。实现了在页面不刷新个情况下和服务器进行数据交互。
+         */
+
+
+        let str = 'sdgagagasgasggasgahhwew'
+
+        function test(str){
+            // console.log(str)
+            let obj = {}
+            let max = 0;
+            let max_key = '';
+            let length = str.length;
+            for(let i = 0; i < length; i++){
+                let value = str[i];
+                // console.log(value)
+                if(obj[value]){
+                    obj[value]++;
+                }else{
+                    obj[value] = 1;
+                }
+            }
+            console.log(obj)
+            for(let key in obj){
+                if(max < obj[key]){
+                    max = obj[key]
+                    max_key = key
+                }
+            }
+
+            console.log('出现最多的次数：'+ max + '，出现最多的字符' + max_key)
+        }
+
+        test(str)
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var a = 10;
+
+        // function fun(){
+        //     // console.log(a)
+        //     var a = 5;
+        //     return function(){
+        //         console.log(a)
+        //         return function(){
+        //             console.log(a)
+        //         }
+        //     }
+        // }
+        //
+        // fun()()();
+        function Person() {
+            /*
+                var this = {
+                    makeMoney : function () {},
+                    offer : function () {}
+                }
+
+                此时的Person里面只有两个方法,
+                如果想通过Person访问money是访问不到的，
+                如果你想通过方法调用来访问(Person.makeMoney.money)
+                就会返回（Uncaught TypeError: Cannot read property 'money' of undefined at <anonymous>:1:14）不能获取
+                但是Person可以操作它，但是别人不可以访问
+            */
+            var money = 100;
+            this.name = name;
+            this.makeMoney = function () {
+                money ++ ;
+                console.log(money)
+            }
+            this.offer = function(){
+                money -- ;
+            }
+            return this;
+        }
+
+        var person = new Person();
+        console.log(person)
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>var、let、const</title>
+
+    <script>
+
+        /**
+         *  var let const 的区别：
+         *      var ：使用var定义的变量会提升到全局变量
+         *      let ：let拥有自己的块级作用域,函数内部(if内部,for内部.....)定义了let后,对外部不会产生影响
+         *      const：与let一样,都拥有自己的块级作用域,常量,值不能更改,并且必须初始化
+         *
+         * var和let在循环中的表现：
+         *      var：由于var定义的变量是一个全局变量,所以每循环一次就会改变一次全局变量的值,
+         *          导致每个元素最后打印的都是修改后的全局变量
+         *
+         *      let：let在每次循环都会产生一个块级作用域,
+         *      每循环一次,都会声明一个新的变量,因此每次该变量的值都是不同的。
+         *
+         */
+
+        window.onload = function () {
+            // let a ;
+            // var b;
+            // console.log(a)
+
+            /*
+                let
+             */
+
+            let a = 1;
+            console.log('函数外的let：', a)
+
+            function lets() {
+                let a = 2;
+                console.log('函数内的let', a)
+            }
+
+            lets();
+            console.log('调用完成后的let', a)
+
+
+            /*
+                var的示例
+             */
+
+            // var b = 3;
+            // console.log('函数外的var',b)    //3
+            // function vars(){
+            //     b = 4;
+            //     console.log('未使用var声明的b：',b)    //4
+            // }
+            //
+            // vars();
+            // console.log('调用完成后的var',b)  //4
+
+            //------------------------------------------
+
+            // var b = 3;
+            // console.log('函数外的var',b)    //3
+            // function vars(){
+            //     /*
+            //         当使用了关键字的修饰符后,变量的作用域就会作用域整个函数内部,不会影响到外面
+            //      */
+            //         console.log(b)           //undefined
+            //     var b = 4;
+            //     console.log('使用var声明的b：',b)    //4
+            // }
+            //
+            // vars();
+            // console.log('调用完成后的var',b)  //3
+
+
+            //-------------------------------------
+
+            var b = 3;
+            console.log('函数外的var', b)    //3
+            function vars() {
+                /*
+                    当使用了关键字的修饰符后,变量的作用域就会作用域整个函数内部,不会影响到外面
+                 */
+                b = 5;
+                console.log('未使用var声明的b：', b) //5
+                var b = 4;
+                console.log('使用var声明的b：', b)    //4
+            }
+
+            vars();
+            console.log('调用完成后的var', b)  //3
+
+
+            /*
+                let 和 var 在循环中的表现
+
+                var 声明的是
+             */
+
+            var sum = []
+            for (var i = 0; i < 10; i++) {
+                sum = i;
+            }
+            console.log('var：', sum)
+
+            let num = 0
+            for(let i = 0; i < 10; i++){
+                num = i
+            }
+            console.log('let：',num)
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

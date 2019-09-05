@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        li{
+            background: lightblue;
+            width: 200px;
+            height: 100px;
+            margin: 30px;
+        }
+        #con{
+            width: 600px;
+            min-height: 300px;
+            border: 1px solid ;
+            margin-left: 20px;
+        }
+        .option1{
+            background: yellow !important;
+        }
+        .option2{
+            background: purple !important;
+        }
+    </style>
+</head>
+<body>
+    <ul id="list">
+<!--        1.拖拽属性    draggable="true"    使元素可以拖拽-->
+        <li style="background: orangered" draggable="true">one</li>
+        <li style="background: #3a8ee6" draggable="true">two</li>
+        <li style="background: deeppink" draggable="true">three</li>
+    </ul>
+
+    <div id="con"></div>
+    <script>
+        window.onload = function(){
+            let ul = document.getElementById("list");
+            let li = document.getElementsByTagName('li');
+            let icon = document.getElementById('con')
+            let length = li.length-1;
+            let num = 0;
+            for(let i = 0 ; i <= length; i++){
+                //ondragstart      元素拖拽之前
+                li[i].ondragstart = function(event){
+                    console.log(this);
+                    this.className = 'option1';
+                    //解决火狐兼容性问题 ev.dataTransfer并且可以设置参数,
+                    //可在后面用ev.dataTransfer.getData('name')来接收参数
+                    let ev = event || window.event;
+                    ev.dataTransfer.setData('name','Tom')
+                }
+
+                //ondrag    元素拖拽中
+                li[i].ondrag = function(){
+                    num++;
+                    // console.log(num)
+                }
+
+                //ondragend     元素拖拽结束
+                li[i].ondragend = function(){
+                    this.className = 'option2'
+                }
+            }
+            //拖拽目标
+            //进入目标
+            icon.ondragenter = function(){
+                console.log('xxx')
+                this.className = 'option1';
+            }
+
+            let b = 0;
+            //目标悬停
+            icon.ondragover = function(ev){
+                b++;
+                console.log('目标悬停：',b)
+                ev.preventDefault();    //阻止浏览器默认事件,使其可以触发ondrop
+            }
+
+            //离开目标
+            icon.ondragleave = function(){
+                console.log('离开')
+                this.className='option2'
+            }
+            /**
+             *  浏览器拖拽默认执行顺序：
+             *      ondragstart(元素拖拽之前)=>ondrag(元素拖拽中)=>ondragenter(进入目标元素)=>
+             *      ondragover(目标元素悬停)=>ondragleave(离开目标元素)
+             *      ondrop会在ondragover(目标元素悬停)结束后触发
+             *      但是因为浏览器默认事件,ondragover事件执行完后会立刻执行ondragleave(离开目标)事件,
+             *      所以ondrop并不会触发
+             *      触发ondrop的方式：在ondragover中阻止浏览器默认事件
+             *      ev.preventDefault();    阻止浏览器默认事件
+             *
+             *      火狐兼容性问题：
+             *          在火狐浏览器中,只有ondragstart能触发
+             *          解决方法：
+             *               解决火狐兼容性问题 ev.dataTransfer,并且可以设置参数,
+             *                可在后面用ev.dataTransfer.getData('name')来接收参数
+             *                let ev = event || window.event;
+             *                ev.dataTransfer.setData('name','Tom')
+             *
+             *        ev.dataTransfer：
+             *              在项目开始拖动的时候可以用来保存被拖动的数据,在项目结束时，可通过
+             *              dataTransfer.getData来获取数据进行操作
+             *
+             *
+             *
+             */
+            //在目标元素上释放鼠标触发
+            icon.ondrop = function(ev){
+                let res = ev.dataTransfer.getData('name');
+                alert(res)
+            }
+        }
+
+
+    </script>
+</body>
+</html>

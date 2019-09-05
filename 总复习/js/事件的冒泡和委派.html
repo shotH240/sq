@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件冒泡和委派</title>
+    <script>
+
+        /**
+         *  相同事件并且拥有祖先关系的元素才会触发事件冒泡
+         *
+         *  使用事件ev的cancelBubble方法设置为true来阻止事件冒泡
+         *  event.cancelBubble = true
+         *
+         *
+         *  事件委派：
+         *      指定将事件统一绑定给元素共同的祖先元素,这样当后代元素触发时,会一直冒泡到祖先元素,
+         *      从而通过祖先元素的响应函数来处理事件
+         */
+        window.onload = function(){
+            /*
+                事件冒泡
+             */
+            let body = document.body;
+            // let html = document.documentElement;
+            // console.log(html)
+            console.log(body)
+            let box = document.querySelector('.box1')
+            // console.log(box)
+            let span = document.querySelector('span')
+            console.log(span)
+
+            // body.onclick = function(ev){
+            //     alert('我是body的点击事件')
+            //     // console.log(ev)
+            // }
+
+            box.onclick = function(ev){
+                alert('我是div的点击事件！')
+                ev.cancelBubble = true; //阻止事件冒泡
+            }
+
+            span.onclick = function(ev){
+                alert('我是span的点击事件！')
+                ev.cancelBubble = true; //阻止事件冒泡
+            }
+
+
+            /*
+                事件委派
+             */
+            let cn = document.querySelector('.aNode');  //a标签的祖先元素
+            let btn = document.getElementById('btn');   //点击按钮添加a标签
+            let ysA = document.querySelectorAll('.ysA') //获取所有的a标签
+            console.log(ysA)
+            let num = 1;
+            btn.onclick = function(ev){ //按钮的点击事件
+                num++;
+                ev.cancelBubble = true;
+                console.log('xxx')
+                let aNode = document.createElement('a')
+                aNode.setAttribute('href','javascript:;')
+                aNode.innerHTML = '我是超链接' + num
+                aNode.style.color='yellow';
+                aNode.className = 'ysA';
+                console.log(aNode)
+                cn.appendChild(aNode)
+            }
+            /**
+             * 通过动态创建的a标签无法触发点击事件,所以只有一个a标签生效,想要让他们全部生效,就要用到事件委派
+             */
+            for(let i = 0; i < ysA.length; i++){
+                ysA[i].onclick = function(){
+                    alert('我是a标签的点击事件')
+                }
+            }
+
+            /**
+             * 给他们的祖先元素绑定事件,通过事件冒泡的方法来为每一个a标签绑定事件
+             *  再通过事件ev的target属性来获取当前元素的信息
+             *  然后利用if来给指定元素设置事件
+             *
+             */
+
+            cn.onclick  = function(ev){
+                // alert('我是整个委派层的父级')
+                console.log(ev.target)
+                if(ev.target.className == 'ysA'){
+                    alert('我是委派层的A标签')
+                }
+            }
+
+        }
+    </script>
+</head>
+<body style="background: cornflowerblue">
+<div class="box1" style="width: 300px; height: 300px;border: 1px solid;background: red">
+    <span class="s1" style="background: yellow">我是span------------------</span>
+</div>
+
+<button id="btn">点我一下</button>
+
+    <div class="aNode">
+     <p>我是div中的P标签</p>
+    <a href="javascript:;" class="ysA">我是超链接1</a>
+    </div>
+</body>
+</html>

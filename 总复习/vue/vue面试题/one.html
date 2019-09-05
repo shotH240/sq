@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>one</title>
+<script>
+    /**
+     *  1.为什么在组件里的data必须是函数
+     *      因为data如果是一个对象,对象本身属于引用数据类型,当我们修改一个属性的时候,他将会影响到所有的组件,
+     *      使用函数的方式返回,可以确立每个组件都是独立的。
+     *
+     *  2.v-if和v-show有什么区别
+     *      v-show是控制元素的display:none和display:block控制元素的显示和隐藏,
+     *      而v-if是控制元素的存在与销毁,当我们需要经常切换某个元素的时候.,就使用v-show,
+     *
+     *  3.$route和$router的区别
+     *      $router是VueRouter的实例方法,可以使用this.$router.push进行不同路由的导航
+     *      $route指的是当前激活的路由对象,通过this.$route可以获取到当前路由的许多信息,比如：name,params,query等等
+     *
+     * 4.vue如何去除url中的#号
+     *      在vueRouter中默认使用的是hash模式,所以在路由加载时,url会自动带上#号,如果不想使用#,可以切换成history模式
+     *
+     * 5.keep-alive是什么
+     *      <keep-alive>是vue的内置组件,能在组件切换的过程中保存状态,防止重复渲染dom。
+     *      将被包含的组件保留状态。
+     *
+     * 6.vuex和localStorage的区别
+     *      localStorage可以存储数据,但是当localStorage中的数据发生改变时,localStorage并不能做到即使更新，
+     *      并且localStorage只可以存储字符串类型，对于复杂的类型需要使用JSON.stringify和JSON.parse来处理
+     *
+     *      vuex则可以存储数据的状态,当状态发生改变时,所有组件的数据也会同步的发生改变
+     *
+     * 7.Vuex中如何异步修改状态
+     *      通过Actions来异步修改状态,然后提交给mutations来更改state的状态
+     *
+     * 8.vuex中的异步操作为什么要放到Actions中去分发    (mutations为什么不能执行异步操作)？
+     *      因为mutations是同步执行的,而在Actions中,即可以是同步,也可以是异步,
+     *      通常是通过Actions改变状态，然后提交给mutations来更改state的状态
+     *
+     * 9.在vue中如何让css只在当前页面生效
+     *      在style中写入scoped
+     *
+     *
+     * 10.vue-单页和多页优缺点
+     *
+     *      单页模式：页面跳转时,使用js渲染。     优点：页面切换快。  缺点：首屏加载时间过长
+     *      多页模式：页面跳转时,使用html渲染。   优点：首屏时间快。   缺点：页面切换速度慢
+     *
+     * 11.vue中key的作用
+     *         保证元素的唯一性,方便复用
+     *
+     * 12.为什么要避免v-for和v-if同时出现在一个元素上
+     *      因为v-for拥有比v-if更高的优先级
+     *
+     * 13.vue如何解决跨域
+     *      创建vue.config.js使用proxy代理,配置好需要代理的url地址,changeOrigin设置为true,并将其导出
+     *
+     *
+     */
+</script>
+</head>
+<body>
+
+</body>
+</html>

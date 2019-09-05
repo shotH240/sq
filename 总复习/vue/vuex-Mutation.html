@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mutation的使用</title>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vuex.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child></child>
+    </div>
+    <template id="child">
+        <div>
+            年龄是：{{age}}
+            <button @click="add">点我一下</button>
+        </div>
+    </template>
+    <script>
+        /**
+         * Mutation的使用：
+         *      1. 定义mutations并修改state的状态
+         *      2. 组件内定义方法来触发mutations
+         *      3. 在方法中通过store.commit来调用mutations中的addAge方法,来更改状态
+         *
+         *
+         *    注：  store.commit方法的 第一个参数与mutations中定义的方法名一致,
+         *    第二个参数则为需要传送到mutations中的参数数据,通常以一个对象的形式将值传递进来
+         *
+         *          mutations总会接收state作为他的第一个参数,第二个参数则是从组件通过store.commit方法传送过来的值
+         * @type {Vuex.Store}
+         */
+        const store = new Vuex.Store({
+            state:{
+                age:10
+            },
+            mutations:{
+                //1. 定义mutations并修改state的状态
+                addAge(state,data){
+                    console.log(data)
+                    state.age++;
+                }
+            }
+        })
+
+        const child = {
+            template:'#child',
+            data(){
+                return {
+                    msg:'Hello',
+                    name:'Tom'
+                }
+            },
+            methods:{
+                //2.用方法来触发mutations
+                add(){
+                    console.log(this)
+                    //3.在方法中通过store.commit来调用mutations中的addAge方法,来更改状态
+                    store.commit('addAge',{msg:this.msg,name:this.name})
+                }
+            },
+            computed:{
+                age(){
+                    console.log(this)
+                    return this.$store.state.age;
+                    // return 123
+                }
+            }
+        }
+
+        const v = new Vue({
+            el:'#app',
+            data:{},
+            components:{child},
+            store
+        })
+    </script>
+</body>
+</html>

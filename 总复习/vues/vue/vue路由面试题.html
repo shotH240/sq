@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue路由面试题</title>
+    <script>
+        /**
+         *  1.mvvm 框架是什么(已备注)
+         *
+         *  2.active-class 是哪个组件的属性
+         *      答：active-class是vue-router模块的router-link组件中的属性，用来做选中样式的切换
+         *          在router-link中写入active-class：
+         *          <router-link to="/home" class="menu-home" active-class="active">首页</router-link>
+         *
+         *   3.怎么定义 vue-router 的动态路由? 怎么获取传过来的值
+         *      当多个路由指向同一个组件时,就需要使用动态路由
+         *      使用方式：   配置path的地方,在路径后面加个  /:id
+         *      通过this.$route.params.id来获取路由参数
+         *
+         *   4.vue-router 有哪几种导航钩子?
+         *      (1)全局：
+         *              1.前置守卫(当进行路由导航时),2,后置守卫(进入组件后,该导航钩子没有next)
+         *      (2)路由独享守卫：
+         *              单个路由独享的守卫
+         *      (3)组件内：
+         *              1.beforeRouteEnter(进入组件前,this不可用,指向window)
+         *              2.beforeRouteUpdate(在当前路由改变，但是依然渲染该组件是调用)
+         *              3.beforeRouteLeave(离开该组件时)
+         *    5.$route 和 $router 的区别
+         *      $router为VueRouter实例，主要是实现路由跳转使用。想要导航到不同URL，则使用router.push方法(name传值和path传值)
+         *      $route会被注册到每个组件中,可以用他来获取当前组件的一些路由信息,如：params,query,name等等
+         *
+         *    6.路由传值方式：
+         *          1.声明式导航  通过<router-link>的方式
+         *          <router-link :to="{ name: 'news', params: { userId: 1111}}">click to news page</router-link>
+         *          <router-link :to="{ path: '/news', query: { userId: 1111}}">click to news page</router-link>
+         *          获取方式：this.$route.params或this.$route.query
+         *          2.编程式导航    通过this.$router.push()的方式
+         *              this.$router.push({ name: 'news', params: { userId: 123 }})
+         *              this.$router.push({ path: '/news', query: { userId: 123 }});
+         *              获取方式：this.$route.params或this.$route.query
+         */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由实现原理</title>
+    <script type="text/template" id="userGo">
+        <div>用户列表</div>
+    </script>
+    <script type="text/template" id="roleGo">
+        <div>角色列表</div>
+    </script>
+    <script>
+        /**
+         * 路由：通过不同的url地址,对应不同的组件,显示对应的页面
+         *
+         * 路由原理：
+         *      == hash模式： 将路由的地址保存到location中,当路由发生变化时,会触发onhashchange，通过事件的监听来进行对应的组件跳转
+         *
+         *      == history模式：当路由发生变化时,会触发onpopstate,通过事件的监听来进行对应的路由组件跳转,
+         *
+         *
+         *  附：  history可以通过window.history.pushState和repalceState来实现URL的变化
+         *        前者是新增一个历史记录,后者是直接替换当前的历史记录
+         *        pushState和repalceState不会直接触发popstate
+         *        但是在popstate中可通过事件的ev.state的方式获取到改变的历史记录
+         *
+         */
+        window.onload = function () {
+            //routerView路由映射
+            let routerView = document.getElementById('routerView');
+
+            function hashFun() {
+                //获取跳转的hash
+                let hash = location.hash;
+                // console.log(hash)
+                if(hash === '#userInfo'){
+                    routerView.innerHTML = document.getElementById('userGo').innerHTML;
+                }else if(hash === '#roleInfo'){
+                    routerView.innerHTML = document.getElementById('roleGo').innerHTML;
+                }
+            }
+
+            window.addEventListener('hashchange', hashFun)
+        }
+    </script>
+</head>
+<body>
+<a href="#userInfo">用户列表</a>
+<a href="#roleInfo">角色列表</a>
+<div id="routerView"></div>
+</body>
+</html>

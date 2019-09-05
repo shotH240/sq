@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史记录</title>
+    <script>
+        /**
+         * hash和history：
+         *
+         *      hash：
+         *          通过window.location.hash = value 来设置值
+         *          当hash值发送改变时,会触发onhashchange事件
+         *          在该事件中可以通过window.location.hash来获取已改变的hash值
+         *
+         *          注：hash通常情况下是一个锚点的跳转
+         *
+         *      history：
+         *          通过history.pushState(arg1,arg2,arg3)来设置历史记录
+         *          arg1：数据
+         *          arg2：标题(可为空)
+         *          arg3：跳转路径(可不写)
+         *
+         *          window.onpopstate事件：
+         *              当浏览器上的回退被点击时或history.back()被触发时执行该事件：
+         *              可通过事件的ev    ev.state来获取存储的值
+         *
+         *          注：history需在服务器上运行
+         *
+         *
+         */
+
+        window.onload = function(){
+            console.log(history)
+            let btn1 = document.getElementById('btn01');
+            let btn2 = document.getElementById('btn02');
+            let btn3 = document.getElementById('btn03')
+            let con = document.getElementById('con')
+
+            /*
+                hash
+             */
+            btn1.onclick = function(){
+                let res = getNum(5);
+                console.log(res)
+
+                window.location.hash = res;
+
+                window.onhashchange = function(){
+                    con.innerHTML = window.location.hash
+                }
+            }
+
+
+            /*
+                history回退
+            */
+            btn3.onclick = function(){
+                history.go(1);
+            }
+
+            /*
+              history
+           */
+            btn2.onclick = function(){
+                let res = getNum(5);
+                console.log(res)
+                let url = './拖拽-购物车.html'
+                history.pushState(res,'标题')
+                window.onpopstate = function(ev){
+                    console.log('ev',ev)
+                   alert(ev.state)
+                }
+            }
+
+
+
+            function getNum(sum){
+                // console.log(sum)
+                let  arr = [];
+                for(let i = 0; i < sum; i++){
+                    //设置1-100之间的随机数
+                    let num = Math.round(Math.random()*99+1);
+                    if(arr.indexOf(num) == -1){
+                        arr.push(num)
+                    }else{
+                        i--;
+                    }
+                }
+                return arr
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="btn01">hash</button>
+    <button id="btn02">history</button>
+    <button id="btn03">回退</button>
+    <p id="con"></p>
+</body>
+</html>

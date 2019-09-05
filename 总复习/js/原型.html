@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /**
+         * JS中每个函数都有一个原型对象
+         * 原型对象就相当于一个大仓库,他的实例对象全部可以共享他的属性和方法
+         *
+         * 作用：通过这些函数创建出来的对象,共享属性和方法
+         *
+         * 函数的prototype指向的是一个对象,这个对象就是该函数的原型对象
+         *
+         * 普通函数的prototype没有任何作用,只有当函数以构造函数的形式调用时,
+         *
+         *他所创建的实例对象中,会有一个__proto__属性,实例对象中的__proto__会指向原型对象
+         *
+         *
+         * 原型链：
+         *     当我们用实例对象访问一个属性或方法时,他会先在自身寻找,如果没有,则会去他的原型对象里去找,
+         *     如果还是没有,则会在该原型对象的原型对象里去找,以此类推,一直找到Object,
+         *     如果Object的原型对象中也没有,则返回undefined,这个寻找的过程就是原型链
+         *
+         *
+         *
+         *
+         *  原型链的最上层是null
+         */
+
+        function Test (name){
+            this.name = name
+        }
+        let t1 = new Test('lalala');
+        console.log(t1.name);
+        console.log(t1.age);
+        // console.log(test.prototype)
+        // console.log(Object)
+        // console.log(Object.prototype)
+    </script>
+</head>
+<body>
+
+</body>
+</html>

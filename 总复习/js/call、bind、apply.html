@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>call、bind、apply的使用</title>
+    <script>
+        /**
+         *  call apply bind 相同点：
+         *      都是用来改变this指向，第一个参数永远是那个this的指向
+         *   call、apply的共同点：    (都是用来调用对象的方法)
+         *      调用对象的一个方法,用另一个对象替换当前对象(功能相同)
+         *      不同点：
+         *          call的后面的参数一一对应方法内的每一个参数
+         *          而apply第二个参数为一个数组,里面按顺序存放每一个参数
+         *    bind特点：
+         *      参数形式与call一致
+         *      但是call和apply更改this指向后会立即执行函数,而bind不会
+         *      它返回的是一个已绑定好新this的函数
+         *
+         *
+         * @param a
+         * @param b
+         */
+        function fun(a,b){
+            console.log('xxx')
+            console.log(a+b)
+        }
+        let obj = {}
+        fun.call(obj,10,20) //xxx   30
+        fun.apply(obj,[10,50])  //xxx   60
+        let c = fun.bind(obj,5,10)  //bind不会立即执行,他返回的是一个已更改好this指向的函数
+        c();    //15
+    </script>
+</head>
+<body>
+
+</body>
+</html>

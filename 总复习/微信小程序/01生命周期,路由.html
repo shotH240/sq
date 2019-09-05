@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /**
+         *  1.小程序组成
+         *      一、主体
+         *          (1)  app.js  小程序逻辑
+         *          (2)  app.json  小程序公共配置
+         *          (3)  app.wxss   小程序公共样式表
+         *      二、小程序页面
+         *          (1)  js     页面逻辑
+         *          (2)  wxml   页面结构
+         *          (3)  json   页面配置
+         *          (4)  wxss   页面样式
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *  2.app.json
+         *      一、属性 pages
+         *              用以指定小程序的页面路径,每一项都对应一个页面的路径,注：文件名不用加后缀
+         *
+         *      二、属性 window
+         *              设置小程序的顶部导航栏,标题,窗口颜色,以及tab层的样式
+         *              (1)navigationBarBackgroundColor     顶部导航栏的背景颜色
+         *              (2)navigationBarTextStyle           顶部导航栏的字体样式(black/white)默认为white
+         *              (3)navigationBarTitleText           导航栏的标题文字内容
+         *              (4)navigationStyle                   导航栏样式(default/custom=>自定义导航栏)默认为default
+         *      三、属性 tabBar
+         *              设置小程序的tab层
+         *              (1)list         配置导航层的对应页面
+         *                  核心参数："pagePath": "对应路径,需要在属性pages中提前配置好"
+         *                           "text"：    跳转层的文本内容
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *  3.逻辑层和视图层
+         *  4.app.js的生命周期钩子
+         *              (1)onLaunch(Object)     页面初始化
+         *              (2)onShow(Object)       页面显示
+         *              (3)onHide()             页面隐藏
+         *              (4)onError(str)         未知错误
+         * 5.小程序页面的生命周期钩子
+         *              注：小程序页面的切换并不是销毁页面,而是将隐藏的页面放到后台
+         *              (1)onLoad               页面创建时(通常情况下只执行一次)
+         *              (2)onShow               显示当前页面时
+         *              (3)onReady              页面首次渲染完成时(通常情况下只执行一次)
+         *              (4)onHide               页面被隐藏时
+         *              (5)onUnload             页面被销毁时
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         *
+         * 6.路由
+         *    --使用路由跳转的路径都必须在app.json中的pages中提前配置好
+         *    I：跳转接口
+         *       一、wx.navigateTo({})  接口     //保留当前页面,跳转到一个非tab的页面
+         *              参数：
+         *                  (1)url:'跳转的路径'          //跳转路径
+         *                  (2)success:function(suc){}  //成功回调
+         *                  (3)fail:function(err){}     //失败回调
+         *                  (4)complete:function(){}    //接口调用结束后立即执行(无论成功还是失败)
+         *                  (5)events:Object            //页面通信接口(未测试)
+         *
+         *       二、wx.redirectTo({})  接口     //关闭当前页面,跳转导一个非tab的页面(会触发页面的onUnload销毁生命钩子)
+         *               参数一致,没有events
+         *       三、wx.navigateBack({})  接口  //关闭当前页面,返回上一级或多级页面
+         *              参数与上个接口一致,多了个delta
+         *              注：通过navigateBack返回的页面必须是存在于后台的
+         *                  (通过redirectTo和reLaunch接口跳转过来的页面无法使用navigateBack)
+         *                  (1)delta：返回的页面数(number),如果 delta 大于现有页面数，则返回到首页
+         *                  tip：利用getCurrentPages方法来获取要返回的页面
+         *                  返回上一级的操作：
+         *                           var pages = getCurrentPages();
+                                     var ps = pages[pages.length - 2]
+                                     wx.navigateBack({
+                                         delta:ps,
+                                         success:function(suc){
+                                            console.log('成功返回上一级',suc)
+                                            }
+                                         })
+         *
+         *       四、wx.switchTab({}) 接口      //跳转到指定的tab页面,并关闭其他所有非tab的页面
+         *              参数与第二个接口一致
+         *              注：该接口的url接口不能带参数
+         *       五、wx.reLaunch({})  接口      //关闭所有页面,打开应用内的某个页面
+         *              参数与第二个接口一致
+         *
+         *    II：路由传参
+         *      tip：正常传参都是url属性值的后面通过?来带参数，除了navigateBack
+         *      一、传参
+         *          (1)普通传参
+         *              '../event/event?name=张三&age=20'
+         *          (2)使用变量当做参数(这里是拿的是当前页面data里面的属性)
+         *              '../event/event?name='+this.data.name+'&age='+this.data.age
+         *          (3)参数包含对象
+         *              '../event/event?name='+this.data.name+'&age='+this.data.age+'&obj='+JSON.stringify(this.data.obj)
+         *              注：如果包含对象,则需要使用JSON.stringify来将其转化为JSON字符串,再接收页面再通过JSON.parse转化回来
+         *      二、接收参数
+         *           每个页面的onLoad生命钩子函数的第一个参数,都可以拿到所有路由跳转传递过来的值
+         *            onLoad: function (options) {
+                        console.log('event首次创建', options)
+                        var obj = JSON.parse(options.obj)
+                        console.log('对象',obj)
+                       }
+         *
+         *
+         *
+         */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

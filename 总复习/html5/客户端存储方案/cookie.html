@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+    <script src="../../util/jquery-1.9.0.min.js"></script>
+    <script src="../../util/jquery.cookie.js"></script>
+    <script>
+        window.onload = function () {
+            /**
+             *  cookie的特点：
+             *          1.cookie有着存储限制,每组值大小为4KB
+             *          2.在所有的同源窗口下都是共享的
+             *          3.设置cookie时,设置的过期时间都是有效的,即使关闭了浏览器
+             *          4.安全问题：所有的数据都存储在客户端的浏览器里,可以被人轻易拦截.
+             *          5.cookie可以和服务器进行交互
+             *
+             * 设置or获取cookie：
+             *           $.cookie(arg1,arg2,arg3)
+             *
+             *
+             *           arg1: name(对应key)
+             *           arg2：value
+             *           arg3：{expris:7}        指定cookie的存活时间为7天
+             *
+             *   无参数时为读取所有cookie
+             *   一个参数时为读取指定cookie
+             *   两个及以上参数为设置cookie
+             *
+             *
+             * 删除cookie：
+             *          $.removeCookie(key)
+             */
+
+            $.cookie('username','admin',{expirs:7});
+            $.cookie('password','123');
+            console.log($.cookie())
+            console.log($.cookie('username'))
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

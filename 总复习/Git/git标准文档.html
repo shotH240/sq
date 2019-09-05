@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>git标准文档</title>
+    <script>
+        /**
+         *   git add .
+         *      -- 添加到暂存区
+         *   git commit -m '提交信息'
+         *      -- 将暂存区的所有信息提交到当前分支
+         *   git status
+         *      -- 查看当前状态(红色为文件已修改,未添加,绿色为已添加,但未提交,如果都没有,则是没有修改)
+         *   git diff 文件名
+         *      -- 查看修改后的文件(若文件没修改,则不会进行任何改变)
+         *   git log
+         *      -- 查看历史的提交记录
+         *   git reset --hard HEAD^
+         *      -- 在Git中，用HEAD表示当前版本,上一个版本就是HEAD^，
+         *        上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+         *   (git reset --hard 提交的前面四个字符)
+         *      -- 如果版本回溯后,又想重新拿回之前被回溯掉的历史记录(提交前面的四个字符可在回溯之前通过git log看到)
+         *    git checkout -- 文件名
+         *      -- 在 git add .之前,你对你的文件进行一些错误的修改,你想让他还原到之前的文件
+         *    git reset HEAD 文件名
+         *      -- 在git add .之后,你对你的文件进行一些错误的修改,
+         *          将暂存区的修改回退到工作区,再使用git checkout -- 文件名的方式可以还原到之前的文件
+         *    git rm 文件名 , git commit -m '删除文件的信息'
+         *      --  如果删除了某个文件,工作区和版本库就会不一致,从版本库中使用这两个命令来确定删除文件
+         *    git remote add origin git@远程库地址
+         *      --  自己的远程仓库里面也拥有该命令(创建一个远程库origin)
+         *    git push origin master
+         *      --  将master分支的提交到本地仓库
+         *    git remote rm 远程库名称(origin)
+         *      --  删除远程库
+         *    git remote -v
+         *      --  查看已有的GitHub远程库
+         *    git clone 远程库地址
+         *      --  克隆一份远程仓库
+         *    git
+         */
+    </script>
+</head>
+<body>
+
+</body>
+</html>
