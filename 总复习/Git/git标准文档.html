@@ -61,7 +61,7 @@
          *
          *    ----  合并分支
          *    在dev子分支上做了修改，然后切换为master主分支,
-         *    这时候该文件会回归到修改之前的状态,这时候需要合并分支
+         *    这时候该文件会回归到改之前的状态,这时候需要合并分支
          *
          *    git merge 子分支名
          *      --  master分支合并子分支
@@ -92,7 +92,41 @@
          *     --6.切换回master分支,使用git merge 子分支名  将子分支合并到master分支上
          *     --7.最后将master中的最新代码推送到远程仓库 ： git push origin master
          *
+		 
+				--拉取子分支
+				git checkout 拉取分支
+				git	pull origin 拉取分支
+				git checkout I'm分支
+				git merge 拉取分支
+				
+				弹窗通过  :wq关闭
+				
+				
+				git push origin  I'm远程仓库
+				
+				远程仓库：Merge Requests  =>  New Merge Request  =>  beta
+				
+				git diff --check	查看冲突
+				
+				git fetch	将远程主机的最新内容拉取到本地，用户在检查了以后决定是否合并到工作本机分支中。
+				
+				拉取代码
+					git fetch 拉取远程的最新内容
+					切换到拉取代码的分支git pull
+					然后切换到自己的分支, git merge 合并分支名
+					git diff --check 查看冲突
+					
+			-----  修改commit的描述信息
+				1. git commit --amend     --进入修改编辑器中
+				2. 在要修改的区域修改描述信息
+				3. esc退出编辑
+				4. :wq保存并退出编辑模式
+				
          */
+		 
+		 
+		 
+		 
     </script>
 </head>
 <body>
